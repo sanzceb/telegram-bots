@@ -29,4 +29,5 @@ pip install -r requirements.txt
 ## Repository Structure
 
 `/schemas`: JSON schemas of requests and responses for easy reference.
+
 `/echo`: A very basic echo server to test the bot API
