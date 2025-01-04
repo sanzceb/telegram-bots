@@ -1,5 +1,5 @@
 # Virtual environment
-telegram_bots_env/
+bots_env/
 
 # Environment variables
 .env
