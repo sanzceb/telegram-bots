@@ -5,19 +5,19 @@
 Create the virtual environment:
 
 ```bash
-python -m venv telegram_bots_env
+python -m venv bots_env
 ```
 
 Active the environment on Linux/Mac:
 
 ```bash
-source telegram_bots_env/bin/activate
+source bots_env/bin/activate
 ```
 
 Activate the environment on Windows:
 
 ```txt
-telegram_bots_env\Scripts\activate
+bots_env\Scripts\activate
 ```
 
 Install the dependencies with `pip`:
@@ -26,11 +26,7 @@ Install the dependencies with `pip`:
 pip install -r requirements.txt
 ```
 
-Setup the environment variables:
+## Repository Structure
 
-- Copy `.env.example` to `.env`
-- Fill the tokens in `.env`
-
-## Available bots
-
-`/hello-dummy`: An example bot to start with the basics.
+`/schemas`: JSON schemas of requests and responses for easy reference.
+`/echo`: A very basic echo server to test the bot API
