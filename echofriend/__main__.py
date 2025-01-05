@@ -34,17 +34,14 @@ while True:
             # Process only incoming messages
             if 'message' in update:
                 msg = update['message']
-                msg_txt = msg['text']
-                chat_id = msg['chat']['id']
-                # is a bot command TODO improve condition test
-                if 'entities' in msg:
-                    command.execute(msg_txt, chat_id)
+                if command.is_command(msg):
+                    command.execute(msg)
                 else: # Echo back the message
                     user = msg['from']['username']
                     print(f"Message read from {user}")
                     msg_params = {
-                        'chat_id' : chat_id,
-                        'text' : msg_txt
+                        'chat_id' : msg['chat']['id'],
+                        'text' : msg['text']
                     }
                     requests.post(f"{BASE_URL}/sendMessage", params=msg_params)
                     print(f"Message echoed")

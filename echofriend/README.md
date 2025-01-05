@@ -16,5 +16,5 @@ python -m echofriend
 
 ## Future improvements
 
-- Make the number of command arguments dynamic
 - Improve the bot command test
+- Improve the env variables management
