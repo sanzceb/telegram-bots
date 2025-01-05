@@ -8,6 +8,7 @@ demonstrating a basic functionality using long polling.
 - Long polling implementation for receiving updates
 - Message echo functionality
 - Offset management to prevent duplicate message processing
+- Only incoming messages are processed (updates with field `'message'`)
 - Graceful exiting when no new messages are available
 
 ## Key Concepts Learned
