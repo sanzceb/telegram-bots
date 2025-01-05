@@ -28,6 +28,14 @@ pip install -r requirements.txt
 
 ## Repository Structure
 
-`/schemas`: JSON schemas of requests and responses for easy reference.
+`schemas`: JSON schemas of requests and responses for easy reference.
 
-`/echo`: A very basic echo server to test the bot API
+`echo`: A very basic echo server to test the bot API
+
+`echofriend`: A basic echo server that handles two global commands: `start` and
+`help`.
+
+## Future improvements
+
+- Implement a new module to deal with the Telegram API
+- Implement a parsing module of Telegram API responses.
