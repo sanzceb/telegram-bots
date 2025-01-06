@@ -34,17 +34,7 @@ while True:
             # Process only incoming messages
             if 'message' in update:
                 msg = update['message']
-                if command.is_command(msg):
-                    command.execute(msg)
-                else: # Echo back the message
-                    user = msg['from']['username']
-                    print(f"Message read from {user}")
-                    msg_params = {
-                        'chat_id' : msg['chat']['id'],
-                        'text' : msg['text']
-                    }
-                    requests.post(f"{BASE_URL}/sendMessage", params=msg_params)
-                    print(f"Message echoed")
+                command.handle_msg(msg)
             else:
                 print(f"Update {update['update_id']} ignored")
         

@@ -32,8 +32,8 @@ pip install -r requirements.txt
 
 `echo`: A very basic echo server to test the bot API
 
-`echofriend`: A basic echo server that handles two global commands: `start` and
-`help`.
+`echofriend`: A basic echo server that handles three global commands: `start`
+, `help` and `echo`.
 
 ## Future improvements
 
