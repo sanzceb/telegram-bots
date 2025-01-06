@@ -3,14 +3,6 @@
 A simple Telegram bot implementation that echoes back the messages it receives,
 demonstrating a basic functionality using long polling.
 
-## Features
-
-- Long polling implementation for receiving updates
-- Message echo functionality
-- Offset management to prevent duplicate message processing
-- Only incoming messages are processed (updates with field `'message'`)
-- Graceful exiting when no new messages are available
-
 ## Key Concepts Learned
 
 1. **Long Polling Strategy**
@@ -24,7 +16,7 @@ demonstrating a basic functionality using long polling.
      - `/sendMessage`: Sends echo responses
 
 3. **Message Handling**
-   - The response object from `requests` can be manages as a json dict.
+   - The response object from `requests` can be managed as a json dict.
    - Manipulating an offset to avoid processing updates multiple times.
    - Message metadata extraction using JSON API.
 
