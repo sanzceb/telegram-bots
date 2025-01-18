@@ -10,7 +10,7 @@ BASE_URL = f"https://api.telegram.org/bot{TOKEN}"
 def handle_msg(msg):
     if not _is_command(msg): 
         _help({'chat_id' : msg['chat']['id']})
-
+        return
     cmd = msg['text'].removeprefix('/').split(' ', 1)
     cmdname = cmd[0]
     cmdargs = cmd[1] if len(cmd) > 1 else None
