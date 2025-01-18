@@ -6,7 +6,6 @@ start and help. When a text message is received it echoes back
 """
 
 import os
-import sys
 
 import requests
 
@@ -25,22 +24,26 @@ update_params = {
         'allowed_updates' : ['message']
 }
 
-while True:
-    # Process the updates
-    res_json = requests.get(f"{BASE_URL}/getUpdates", update_params).json()
-    if res_json['ok']:
-        updates = res_json['result']
-        for update in updates:
-            # Process only incoming messages
-            if 'message' in update:
-                msg = update['message']
-                command.handle_msg(msg)
-            else:
-                print(f"Update {update['update_id']} ignored")
-        
-        # Telegram won't send again the updates below the offset
-        if updates: 
-            update_params['offset'] = updates[-1]['update_id'] + 1
-        elif update_params['offset'] > 0:
-            print('Nothing to read, exiting')
-            sys.exit()
+def process_update(update):
+    if 'message' in update:
+        msg = update['message']
+        command.handle_msg(msg)
+    else:
+        print(f"Update {update['update_id']} ignored")
+
+updates = []
+try:
+    while True:
+        res_json = requests.get(f"{BASE_URL}/getUpdates", update_params).json()
+        if res_json['ok']:
+            updates = res_json['result']
+            for update in updates:
+                process_update(update) 
+            # Telegram won't send again the updates below the offset
+            if updates: 
+                update_params['offset'] = updates[-1]['update_id'] + 1
+except KeyboardInterrupt:
+    print('\nShutting down echofriend. Processing remaining updates if any')
+    for update in updates:
+        process_update(update)
+    print('Program ended')
