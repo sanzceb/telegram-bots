@@ -13,31 +13,15 @@ class Fixture:
                     return obj
         return None
     
-    @property
-    def home(self):
-        return self._home
-    
-    @property 
-    def away(self):
-        return self._away
-
-    @property
-    def matchday(self):
-        return self._matchday
-    
-    @property
-    def stadium(self):
-        return self._stadium
-    
     def __getattr__(self, name):
-        if name not in {'_home', '_away', '_matchday', '_stadium'}:
+        if name not in {'home', 'away', 'matchday', 'stadium'}:
             raise AttributeError
-        prop = name[1:]
-        value = self.fixture[prop]
-        if name in {'_home', '_away'}:
+
+        value = self.fixture[name]
+        if name in {'home', 'away'}:
             self.__setattr__(name, Fixture._obj_with_id('club.csv', value))
         else:
-            filename = f'{prop}.csv'
+            filename = f'{name}.csv'
             self.__setattr__(name, Fixture._obj_with_id(filename, value))
         return self.__getattribute__(name)
 
