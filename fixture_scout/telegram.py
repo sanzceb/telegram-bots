@@ -24,7 +24,7 @@ class TelegramClient:
     def stop(self):
         print('\nShutting down fixture_scout. \
               Processing remaining updates if any')
-        updates = self.__updates(0)
+        updates = self.__updates(timeout=0)
         for update in updates:
             self.__process_update(update)
             self.__set_offset(update)
