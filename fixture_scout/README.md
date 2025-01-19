@@ -8,3 +8,8 @@
 - `start` and `help` both return help texts.
 - `fixtures` will query the fixtures of a given team for the upcoming month.
 - The bot calls the message client to answer the user.
+
+## Data access
+
+- The module fixture maps relational records to objects.
+- It publishes the definition of a fixture that the core will consume.

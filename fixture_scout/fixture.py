@@ -3,7 +3,7 @@ import csv
 class Fixture:
     def __init__(self, fixtureID):
         self.fixture = Fixture._obj_with_id('fixture.csv', fixtureID) 
-         
+
     @staticmethod
     def _obj_with_id(filename, ID):
         with open(filename, newline='') as file:
@@ -32,7 +32,6 @@ class Fixture:
     def __getattr__(self, name):
         if name not in {'_home', '_away', '_matchday', '_stadium'}:
             raise AttributeError
-
         prop = name[1:]
         value = self.fixture[prop]
         if name in {'_home', '_away'}:
@@ -40,11 +39,13 @@ class Fixture:
         else:
             filename = f'{prop}.csv'
             self.__setattr__(name, Fixture._obj_with_id(filename, value))
+        return self.__getattribute__(name)
 
-    # def __repr__(self):
-    #     return f"""{self.home['name_en']} - {self.away['name_en']}\
-    #             {self.matchday['date']} {self.stadium['name']}"""
-    
+    def __repr__(self):
+        return (f"{self.home['name_en']} - {self.away['name_en']}"
+            f", {self.matchday['date']}, {self.stadium['name']}"
+            f", ({self.stadium['city']})")
+            
     
 class FixtureTable:
     def __init__(self):
@@ -61,5 +62,5 @@ class FixtureTable:
         pass
 
 if __name__ == '__main__':
-    fixture = Fixture('2')
-    print(fixture.home)
+    fixture = Fixture('1')
+    print(fixture)
