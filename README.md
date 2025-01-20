@@ -35,7 +35,10 @@ pip install -r requirements.txt
 `echofriend`: A basic echo server that handles three global commands: `start`
 , `help` and `echo`.
 
+`fixture_scout`: A simple bot that reads a football calendar from csv files
+responds to queries made by the command `/fixture`. It is in development right now.
+
 ## Future improvements
 
-- Implement a new module to deal with the Telegram API
-- Implement a parsing module of Telegram API responses.
+- `fixture_scout`: Create a simple module import the data from csv files
+using `csv` module
