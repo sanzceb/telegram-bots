@@ -1,50 +1,51 @@
+#!/usr/bin/env python3
+
 import csv
+import pkgutil
+import io
+from functools import reduce
 
-class Fixture:
-    def __init__(self, fixtureID):
-        self.fixture = Fixture._obj_with_id('fixture.csv', fixtureID) 
 
-    @staticmethod
-    def _obj_with_id(filename, ID):
-        with open(filename, newline='') as file:
-            objs = csv.DictReader(file)
-            for obj in objs:
-                if obj['ID'] == ID:
-                    return obj
+def read_data(fname):
+    rawdata = pkgutil.get_data(__package__, f'data/{fname}')
+    if not rawdata:
+        raise SystemExit(f"{fname} not found")
+    else:
+        txtdata = io.StringIO(rawdata.decode('utf-8'))
+        return [row for row in csv.DictReader(txtdata)]
+
+_rows = read_data('club.csv')
+clubs_by_name, clubs = {}, {}
+for row in _rows:
+    clubs_by_name[row['name_en']] = row
+    clubs[row['ID']] = row
+
+_rows = read_data('stadium.csv')
+stadiums = {row['ID'] : row for row in _rows}
+
+_rows = read_data('matchday.csv')
+matchdays = {row['ID'] : row for row in _rows}
+
+fixtures = read_data('fixture.csv')
+
+def fix_repr(fix):
+    mday = matchdays[fix['matchday']]
+    date = mday['date']
+    number = mday['number']
+    home = clubs[fix['home']]
+    away = clubs[fix['away']]
+    stadium = stadiums[fix['stadium']]
+    return f'{home['name_en']} - {away['name_en']}'\
+         + f' | {stadium['name']}'\
+         + f' | {date}'
+
+def upcoming_fixtures(clubname):
+    if clubname not in clubs_by_name:
+        print(f'{clubname} not found')
         return None
-    
-    def __getattr__(self, name):
-        if name not in {'home', 'away', 'matchday', 'stadium'}:
-            raise AttributeError
+    clubid = clubs_by_name[clubname]['ID']
+    pred = lambda x: x['home'] == clubid\
+            or x['away'] == clubid
+    op = lambda x,y : f'{x}\n{y}'
+    return reduce(op, map(fix_repr, filter(pred, fixtures)), '')
 
-        value = self.fixture[name]
-        if name in {'home', 'away'}:
-            self.__setattr__(name, Fixture._obj_with_id('club.csv', value))
-        else:
-            filename = f'{name}.csv'
-            self.__setattr__(name, Fixture._obj_with_id(filename, value))
-        return self.__getattribute__(name)
-
-    def __repr__(self):
-        return (f"{self.home['name_en']} - {self.away['name_en']}"
-            f", {self.matchday['date']}, {self.stadium['name']}"
-            f", ({self.stadium['city']})")
-            
-    
-class FixtureTable:
-    def __init__(self):
-        self._fixtures = {}
-    
-    def upcoming_fixtures(self, team):
-        result = {}
-        # Get the home fixtures
-        # Get the away fixtures
-        # join
-        return result
-    
-    def _upcoming_fixtures(self, team):
-        pass
-
-if __name__ == '__main__':
-    fixture = Fixture('1')
-    print(fixture)

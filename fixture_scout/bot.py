@@ -1,10 +1,10 @@
-
-#import fixture
+from . import fixture as fxt
 
 class Bot:
     def __init__(self, msg_client):
         self.msg_client = msg_client
         msg_client.register(self)
+
 
     @staticmethod
     def is_command(msg):
@@ -24,8 +24,9 @@ class Bot:
         chat_id = msg['chat']['id']
         if cmdname == 'start':
             self._start(chat_id)
-        elif cmdname == 'fixtures':
+        elif cmdname == 'fixture':
             team = cmdargs if cmdargs else 'your team'
+            print(team)
             self._fixtures(chat_id, team)
         else:
             self._help(chat_id)
@@ -41,6 +42,7 @@ class Bot:
         self.msg_client.send_text_message(chat_id, txt)
 
     def _fixtures(self, chat_id, team):
-        txt = f"Soon I will how you the upcoming matches of {team}"
+        fixtures = fxt.upcoming_fixtures(team)
+        txt = fixtures if fixtures else f'I did not find any match'
         self.msg_client.send_text_message(chat_id, txt)
     

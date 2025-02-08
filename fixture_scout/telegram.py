@@ -51,3 +51,4 @@ class TelegramClient:
     def __set_offset(self, update):
         # Telegram won't send again the updates below the offset
         self._offset = update['update_id'] + 1
+
